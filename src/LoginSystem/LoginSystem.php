@@ -292,6 +292,7 @@ class LoginSystem extends PluginBase implements Listener {
 
     function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
         switch ($command->getName()) {
+		$player = $sender
         	case "register":
         	case "login":
         		if ($sender instanceof Player) {
