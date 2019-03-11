@@ -153,7 +153,7 @@ class LoginSystem extends PluginBase implements Listener {
                 			'title'   => 'アカウント登録',
                 			'content' => [
                 				[
-                   		    		"type" => "label",
+                   		    		"type" => "label",。
                     			    "text" => "§cパスワードは英数字で設定してください\n§eもう一度最初から パスワード を打ってください",
                     			],
                     			[
@@ -292,9 +292,9 @@ class LoginSystem extends PluginBase implements Listener {
 
     function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
         switch ($command->getName()) {
-		$player = $sender;
         	case "register":
         	case "login":
+			$player = $sender;
         		if ($sender instanceof Player) {
                     $name = strtolower($sender->getName());
                     $r = $this->DB("SELECT * FROM player WHERE name=\"$name\"", true);
