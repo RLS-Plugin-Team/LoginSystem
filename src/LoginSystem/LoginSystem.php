@@ -151,7 +151,7 @@ class LoginSystem extends PluginBase implements Listener {
                 			'title'   => 'アカウント登録',
                 			'content' => [
                 				[
-                   		    		"type" => "label",。
+                   		    		"type" => "label",
                     			    "text" => "§cパスワードは英数字で設定してください\n§eもう一度最初から パスワード を打ってください",
                     			],
                     			[
