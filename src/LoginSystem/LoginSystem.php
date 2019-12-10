@@ -81,7 +81,7 @@ class LoginSystem extends PluginBase implements Listener {
         $cid = $player->getClientId();
         $r = $this->DB("SELECT * FROM player WHERE name=\"$name\"", true);
         if (empty($r)) {
-            $player->sendMessage("§b【運営】>> §eこのサーバーではログイン認証を行っています\n§b【運営】>> §eアカウント登録画面が出ない場合 /register と打ってください");
+            $player->sendMessage("§b【運営】 >> §eこのサーバーではログイン認証を行っています\n§b【運営】 >> §eアカウント登録画面が出ない場合 /register と打ってください");
             $player->setImmobile(true);
             $data = [
                 'type'    => 'custom_form',
@@ -108,10 +108,10 @@ class LoginSystem extends PluginBase implements Listener {
             $this->getInstance()->getScheduler()->scheduleDelayedTask(new Callback([$this,"createWindow"],[$player,$data,5]),20);
         } else {
             if ($r["ip"] == $ip && $r["cid"] == $cid) {
-                $player->sendMessage("§b【運営】>> §eログイン認証がされました");
+                $player->sendMessage("§b【運営】 >> §eログイン認証がされました");
             } else {
             	$this->log[$name] = 0;
-		$player->sendMessage("§b【運営】>> §eあなたの情報が変わったようです\n§b【運営】>> §eアカウント登録画面が出ない場合 /login と打ってください");
+		$player->sendMessage("§b【運営】 >> §eあなたの情報が変わったようです\n§b【運営】 >> §eアカウント登録画面が出ない場合 /login と打ってください");
                 $player->setImmobile(true);
                 $this->DB("UPDATE player set data=\"2\" WHERE name=\"$name\"");
                 $data = [
@@ -176,7 +176,7 @@ class LoginSystem extends PluginBase implements Listener {
                     		$h = MD5($data[1]);
                     		$p = hash('sha256', 'login' . $h . 'system');
                     		$this->DB("INSERT OR REPLACE INTO player VALUES(\"$name\",\"$p\",\"$ip\",\"$cid\",\"1\")");
-                    		$player->sendMessage("§b【運営】>> §eパスワードを登録しました\n§b【運営】>> §eパスワードは< " . $data[1] . " >です\n§b【運営】>> §eスクリーンショットをして保存してください");
+                    		$player->sendMessage("§b【運営】 >> §eパスワードを登録しました\n§b【運営】 >> §eパスワードは< " . $data[1] . " >です\n§b【運営】 >> §eスクリーンショットをして保存してください");
                     		$player->setImmobile(false);
                     	} else {
                         	$data = [
@@ -212,7 +212,7 @@ class LoginSystem extends PluginBase implements Listener {
                 		$p = hash('sha256', 'login' . $h . 'system');
                 		if ($r["pass"] == $p) {
                     		$this->DB("UPDATE player set ip=\"$ip\",cid=\"$cid\",data=\"1\" WHERE name=\"$name\"");
-                    		$player->sendMessage("§b【運営】>> §eパスワードで認証されました");
+                    		$player->sendMessage("§b【運営】 >> §eパスワードで認証されました");
 	                    	$this->log[$name] = 0;
 	                    	$player->setImmobile(false);
                 		} else {
@@ -220,7 +220,7 @@ class LoginSystem extends PluginBase implements Listener {
 	                    	if ($this->log[$name] >= 30) {
 	                        	$this->addClientBan($cid, $name, "LoginMiss");
 	                        	$player->kick("§cパスワードを複数回間違えたのであなたをBANしました",false);
-	                        	Server::getInstance()->broadcastMessage("§b【運営】>> §eパスワードを複数回間違えたので" . $name . "をBANしました");
+	                        	Server::getInstance()->broadcastMessage("§b【運営】 >> §eパスワードを複数回間違えたので" . $name . "をBANしました");
 	                    	} else {
 	                    		$data = [
 	                				'type'    => 'custom_form',
@@ -254,9 +254,9 @@ class LoginSystem extends PluginBase implements Listener {
                         	if ($target instanceof Player) $target->kick("§cあなたの端末をBANしました",false);
                         	$cid = $r["cid"];
                         	$this->addClientBan($cid, $user, "AdminBan");
-                        	Server::getInstance()->broadcastMessage("§b【運営】>> §e" . $name . "が" . $data[1] . "をClientBanしました");
+                        	Server::getInstance()->broadcastMessage("§b【運営】 >> §e" . $name . "が" . $data[1] . "をClientBanしました");
                     	} else {
-                        	$sender->sendMessage("§b【運営】>> §c" . $data[1] . "のデータがありません");
+                        	$sender->sendMessage("§b【運営】 >> §c" . $data[1] . "のデータがありません");
                     	}
         			} elseif ($data[0] === 1) {
         				if (!empty($r)) {
@@ -264,16 +264,16 @@ class LoginSystem extends PluginBase implements Listener {
                         	$cid = $r["cid"];
                         	$this->addClientBan($cid, $user, "AdminBan");
 	                        Server::getInstance()->getIPBans()->add(new BanEntry($ip = ($target instanceof Player) ? $target->getAddress() : $r["ip"]));
-	                        Server::getInstance()->broadcastMessage("§b【運営】>> §e" . $name . "が" . $data[1] . "をClientBanとIPBanしました");
+	                        Server::getInstance()->broadcastMessage("§b【運営】 >> §e" . $name . "が" . $data[1] . "をClientBanとIPBanしました");
 	                    } else {
-	                        $sender->sendMessage("§b【運営】>> §c" . $data[0] . "のデータがありません");
+	                        $sender->sendMessage("§b【運営】 >> §c" . $data[0] . "のデータがありません");
 	                    }
         			} elseif ($data[0] === 2) {
         				if (!empty($r)) {
 	                        $cid = $r["cid"];
 	                        if ($this->isClientBan($cid)) {
 	                            $this->removeClientBan($cid);
-	                            Server::getInstance()->broadcastMessage("§b【運営】>> §e" . $name . "が" . $data[1] . "のClientBanを解除しました");
+	                            Server::getInstance()->broadcastMessage("§b【運営】 >> §e" . $name . "が" . $data[1] . "のClientBanを解除しました");
 	                        } else {
 	                            $sender->sendMessage("> " . $data[1] . "はClientBanされていません");
 	                        }
@@ -282,7 +282,7 @@ class LoginSystem extends PluginBase implements Listener {
 	                    }
         			}
         		} else {
-        			$player->sendMessage("§b【運営】>> §cプレイヤー名を入れてください");
+        			$player->sendMessage("§b【運営】 >> §cプレイヤー名を入れてください");
         		}
         	}
         }
@@ -340,7 +340,7 @@ class LoginSystem extends PluginBase implements Listener {
 			            	];
 			            	$this->createWindow($sender,$data,5);
         				} else {
-        					$player->sendMessage("§b【運営】>> §cログイン認証がされています");
+        					$player->sendMessage("§b【運営】 >> §cログイン認証がされています");
         				}
         			}
                 }
@@ -355,7 +355,7 @@ class LoginSystem extends PluginBase implements Listener {
                         $cid = $r["cid"];
                         if ($this->isClientBan($cid)) {
                             $this->removeClientBan($cid);
-                            Server::getInstance()->broadcastMessage("§b【運営】>> §e" . $sender->getName() . "が" . $n . "のBanを解除しました");
+                            Server::getInstance()->broadcastMessage("§b【運営】 >> §e" . $sender->getName() . "が" . $n . "のBanを解除しました");
                         } else {
                             $sender->sendMessage("> " . $n . "はBanされていません");
                         }
@@ -379,7 +379,7 @@ class LoginSystem extends PluginBase implements Listener {
                             $sender->kick("§cログインデータを削除したのでもう一度ログインしなおしてください",false);
                             $this->getLogger()->info("> " . $name . "がデータを削除しました");
                         } else {
-                        	$sender->sendMessage("§b【運営】>> §cパスワードが違います");
+                        	$sender->sendMessage("§b【運営】 >> §cパスワードが違います");
                         }
                     }
                 } else {
